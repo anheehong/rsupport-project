@@ -31,14 +31,21 @@ class NoticeController(
     ): ResponseEntity<ApiResponse<NoticeResponseDto>>
         = ResponseEntity.ok(ApiResponse.success("게시글 생성 성공", noticeService.createNoticeWithFiles(dto, files)))
 
-    @Operation(summary = "게시글 조회", description = "ID로 게시글을 조회합니다. 사용자가 해당 글을 읽었는지 확인하고 읽은 기록이 없다면 조회수를 올립니다. 쿠키와 IP 중복 불가")
+//    @Operation(summary = "게시글 조회", description = "ID로 게시글을 조회합니다. 사용자가 해당 글을 읽었는지 확인하고 읽은 기록이 없다면 조회수를 올립니다. 쿠키와 IP 중복 불가")
+//    @GetMapping("/{id}")
+//    fun getNoticeView(
+//        @PathVariable id: Long,
+//        request: HttpServletRequest,
+//        response: HttpServletResponse
+//    ): ResponseEntity<ApiResponse<NoticeResponseDto>> =
+//        ResponseEntity.ok(ApiResponse.success("게시글 조회 성공", noticeService.getNoticeView(id, request, response)))
+
+    @Operation(summary = "게시글 조회", description = "ID로 게시글을 조회합니다.")
     @GetMapping("/{id}")
-    fun getNoticeView(
-        @PathVariable id: Long,
-        request: HttpServletRequest,
-        response: HttpServletResponse
+    fun getNotice(
+        @PathVariable id: Long
     ): ResponseEntity<ApiResponse<NoticeResponseDto>> =
-        ResponseEntity.ok(ApiResponse.success("게시글 조회 성공", noticeService.getNoticeView(id, request, response)))
+        ResponseEntity.ok(ApiResponse.success("게시글 조회 성공", noticeService.getNotice(id)))
 
     @Operation(summary = "게시글 검색", description = "게시글을 검색합니다.")
     @GetMapping
