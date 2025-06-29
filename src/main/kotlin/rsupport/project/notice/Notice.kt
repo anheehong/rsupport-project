@@ -2,12 +2,14 @@ package rsupport.project.notice
 
 import rsupport.project.base.CreateModifiedBase
 import jakarta.persistence.*
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import rsupport.project.notice.file.NoticeFile
 import rsupport.project.user.User
 import java.time.LocalDate
 
 @Entity
 @Table(name = "RS_NOTICE")
+@EntityListeners(AuditingEntityListener::class)
 class Notice(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
