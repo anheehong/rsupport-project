@@ -36,8 +36,8 @@ class NoticeServiceTest {
     @Test
     fun createNoticeWithFile() {
         val user = User(1L, "test", "test@test.com")
-        val dto = NoticeRequestCreateDto("title", "contents", from = LocalDate.now(), to = LocalDate.now(), 1L)
-        val notice = dto.toEntity(user)
+        val createDto = NoticeRequestCreateDto("title", "contents", from = LocalDate.now(), to = LocalDate.now(), 1L)
+        val notice = createDto.toEntity(user)
 
         val file: MultipartFile = mockk()
         every { file.name } returns "file.txt"
@@ -47,9 +47,9 @@ class NoticeServiceTest {
         every { userService.findById(1L) } returns user
         every { noticeRepository.save(any()) } returns notice
 
-        val result = noticeService.createNoticeWithFiles(dto, listOf(file))
+        val result = noticeService.createNoticeWithFiles(createDto, listOf(file))
 
-        Assertions.assertEquals(dto.title, result.title)
+        Assertions.assertEquals(createDto.title, result.title)
         verify { fileStorageService.save(file) }
         verify { noticeRepository.save(any()) }
     }
@@ -72,7 +72,7 @@ class NoticeServiceTest {
 
     @Test
     fun getNotice_Fail() {
-        every { noticeRepository.findById(99L) } returns Optional.empty()
+        every { noticeRepository.findByIdWithFiles(99L) } returns null
 
         val exception = Assertions.assertThrows(NoSuchElementException::class.java) {
             noticeService.getNotice(99L)

@@ -36,7 +36,7 @@ class NoticeService(
         return noticeRepository.save(newNotice).responseDto
     }
 
-    fun getNotice(id: Long): NoticeResponseDto = findNotice(id).responseDto
+    fun getNotice(id: Long): NoticeResponseDto = findNoticeWithFiles(id).responseDto
 
     fun getNoticeView(id: Long, request: HttpServletRequest, response: HttpServletResponse): NoticeResponseDto {
         val notice = findNoticeWithFiles(id)
